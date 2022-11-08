@@ -1,0 +1,25 @@
+
+.slider-nav-prod .slick-slide > div, .rtl-slider-nav .slick-slide > div, .slider-right-nav .slick-slide > div, .rtl-slider-right-nav .slick-slide > div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 15px 15px 0 15px;
+    border: 1px solid #ddd;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    opacity: 0.4;
+    width: 100px !important;
+}
+
+.slider-nav-prod .slick-slide.slick-current > div, .rtl-slider-nav .slick-slide.slick-current > div, .slider-right-nav .slick-slide.slick-current > div, .rtl-slider-right-nav .slick-slide.slick-current > div {
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    opacity: 1;
+}
+
+.slider-nav-prod .slick-slide.slick-active, .rtl-slider-nav .slick-slide.slick-active, .slider-right-nav .slick-slide.slick-active, .rtl-slider-right-nav .slick-slide.slick-active {
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    opacity: 1;
+    /*width: 130px !important;*/
+}
