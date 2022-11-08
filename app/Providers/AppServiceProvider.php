@@ -30,8 +30,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $view->with('navbarItems', Navbar::all());
             $view->with('config', Config::get()->first());
-            $view->with('cartContent', \Cart::session(request()->session()->getId())->getContent());
-            $view->with('count', \Cart::session(request()->session()->getId())->getContent()->count());
+            $view->with('cartContent', (new CartRepository())->content());
+            $view->with('count', (new CartRepository())->count());
         });
     }
 }

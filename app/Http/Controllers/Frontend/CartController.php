@@ -17,10 +17,12 @@ class CartController extends Controller
      */
     public function index(): array
     {
-        $cartContent = (new CartRepository())->content();
-        $count = (new CartRepository())->count();
+        return (new CartRepository())->cartState();
+//        $cartContent = (new CartRepository())->content();
+//        $count = (new CartRepository())->count();
 
-        return compact('cartContent', 'count');
+//        return compact('cartContent', 'count');
+
     }
 
     public function count(): JsonResponse

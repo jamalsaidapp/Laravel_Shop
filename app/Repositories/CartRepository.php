@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 class CartRepository
 {
 
-    public function add(Product $product): int
+    public function add(Product $product)
     {
         \Cart::session(request()->session()->getId())
             ->add([
@@ -20,19 +20,25 @@ class CartRepository
                 'associatedModel' => $product
             ]);
 
-        return $this->content();
+        return $this->cartState();
     }
 
-    public function content(): array
+    public function cartState(): array
     {
         $cartContent = \Cart::session(request()->session()->getId())->getContent();
-        $count = $this->count();
+        $count = $cartContent->sum('quantity');
         return compact('cartContent', 'count');
     }
 
     public function count(): int
     {
         return $this->content()->sum('quantity');
+    }
+
+    public function content()
+    {
+        return \Cart::session(request()->session()->getId())
+            ->getContent();
     }
 
     public function jsonOrderItems(): string
@@ -55,18 +61,18 @@ class CartRepository
             ->getTotal();
     }
 
-    public function decreaseQuantity(int $rowId): array
+    public function decreaseQuantity(int $rowId)
     {
         if ($this->getItem($rowId)->quantity === 1) {
             $this->delete($rowId);
-            return $this->content();
+            return $this->cartState();
         }
 
         \Cart::session(request()->session()->getId())
             ->update($rowId, array(
                 'quantity' => -1
             ));
-        return $this->content();
+        return $this->cartState();
     }
 
     private function getItem(int $rowId)
@@ -75,20 +81,20 @@ class CartRepository
             ->get($rowId);
     }
 
-    public function delete(string $rowId): int
+    public function delete(string $rowId)
     {
         \Cart::session(request()->session()->getId())->remove($rowId);
 
-        return $this->content();
+        return $this->cartState();
     }
 
-    public function increaseQuantity(int $rowId): array
+    public function increaseQuantity(int $rowId)
     {
         \Cart::session(request()->session()->getId())
             ->update($rowId, array(
                 'quantity' => +1
             ));
-        return $this->content();
+        return $this->cartState();
     }
 
     public function clear()
